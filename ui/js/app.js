@@ -6,6 +6,7 @@ var locale = null
 var localeCode = null
 var jsLocaleCode = null  // Sometimes slightly different than localeCode
 var _primaryLocales = []
+var _primaryCoins = ["Bitcoin", "Dash"]
 var lastRate = null
 
 var currentState
@@ -67,6 +68,7 @@ function processData (data) {
   if (data.locale) setLocale(data.locale)
   if (!locale) return
   if (data.currency) setCurrency(data.currency)
+  if (data.coin) setCoin(data.coin)
   if (data.exchangeRate) setExchangeRate(data.exchangeRate)
   if (data.fiatExchangeRate) setFiatExchangeRate(data.fiatExchangeRate)
   if (data.buyerAddress) setBuyerAddress(data.buyerAddress)
@@ -315,6 +317,10 @@ $(document).ready(function () {
   setupButton('change-language-button', 'changeLanguage')
   setupButton('digital-change-language-button', 'changeLanguage')
 
+  setupButton('change-coin-button', 'changeCoin')
+  setupButton('digital-change-coin-button', 'changeCoin')
+
+
   var lastTouch = null
 
   var languageButtons = document.getElementById('languages')
@@ -324,6 +330,17 @@ $(document).ready(function () {
     var newLocale = languageButtonJ.attr('data-locale')
     buttonPressed('setLocale', {locale: newLocale})
   })
+
+  var coinButtons = document.getElementById('coins')
+  touchEvent(coinButtons, function (e) {
+    var coinButtonJ = $(e.target).closest('li')
+    if (coinButtonJ.length === 0) return
+    $('.js-coin').text(coinButtonJ.attr(''))
+    // TODO what to do when a coin is pressed?
+    //var newLocale = coinButtonJ.attr('data-locale')
+    //buttonPressed('setLocale', {locale: newLocale})
+  })
+
 
   var fiatButtons = document.getElementById('js-fiat-buttons')
   touchImmediateEvent(fiatButtons, function (e) {
@@ -574,9 +591,34 @@ function setPrimaryLocales (primaryLocales) {
   else languages.removeClass('n2')
 }
 
+function setPrimaryCoins (primaryCoins) {
+  if (areArraysEqual(primaryCoins, _primaryCoins)) return
+  _primaryCoins = primaryCoins
+
+  var coins = $('.coins')
+  coins.empty()
+
+  for (var i = 0; i < primaryCoins.length; i++) {
+    var l = primaryCoins[i]
+    var li = '<li class="square-button" data="' + l + '">' + l + '</li>'
+    coins.append(li)
+  }
+
+  if (primaryCoins.length === 1) $('#change-coin-button').hide()
+  else $('#change-coin-button').show()
+
+  if (primaryCoins.length === 2) coins.addClass('n2')
+  else coins.removeClass('n2')
+}
+
 function setCurrency (data) {
   currency = data
   $('.js-currency').text(currency)
+}
+
+function setCoin (data) {
+  coin = data
+  $('.js-coin').text(coin)
 }
 
 function setCredit (fiat, bitcoins, lastBill) {

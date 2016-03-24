@@ -1170,7 +1170,21 @@ body  { margin: 0;}
   padding: 23px 60px;
 }
 
-#change-language-button:active, #change-language-button.active {
+#change-coin-button {
+  position: absolute;
+  top: 664px;
+  left: 406px;
+  font-weight: bold;
+  background-color: #ffffff;
+  color: #5f5f55;
+  font-size: 18px;
+  border-radius: 38px/50%;
+  border: solid 3px #ffffff;
+  padding: 23px 60px;
+}
+
+
+#change-language-button:active, #change-language-button.active, #change-coin-button:active, #change-coin-button.active {
   background-color: #eeeeee;
   border-color: #eeeeee;
 }
@@ -1188,7 +1202,21 @@ body  { margin: 0;}
   padding: 23px 60px;
 }
 
-#digital-change-language-button:active, #digital-change-language-button.active {
+#digital-change-coin-button {
+  position: absolute;
+  top: 30px;
+  left: 850px;
+  font-weight: bold;
+  background-color: #D0D0C8;
+  color: #5f5f55;
+  font-size: 20px;
+  border-radius: 38px/50%;
+  border: solid 3px #D0D0C8;
+  padding: 23px 60px;
+}
+
+
+#digital-change-language-button:active, #digital-change-language-button.active, #digital-change-coin-button:active, #digital-change-coin-button.active {
   background-color: #B9B9AC;
   border-color: #B9B9AC;
 }
@@ -1586,7 +1614,7 @@ body  { margin: 0;}
   }
 }
 
-.languages {
+.languages .coins {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -1599,7 +1627,7 @@ body  { margin: 0;}
   padding: 50px 0;
 }
 
-.languages li {
+.languages li, .coins li {
   color: #0e4160;
   height: 110px;
   line-height: 110px;
@@ -1610,12 +1638,12 @@ body  { margin: 0;}
   padding: 0 80px;
 }
 
-.languages.n2 li {
+.languages.n2 li, .coins.n2 li {
   height: 200px;
   line-height: 200px;
 }
 
-.languages li .native {
+.languages li .native, .coins li .native {
   float: right;
   color: #5f5f55;
   font-weight: 400;
@@ -1643,7 +1671,7 @@ body  { margin: 0;}
   color: #ffffff;
 }
 
-.languages li:active .native, .languages li.active .native {
+.languages li:active .native, .languages li.active .native, .coins li:active .native, .coins li.active .native {
   color: #ffffff;
 }
 
