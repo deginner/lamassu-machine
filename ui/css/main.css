@@ -66,7 +66,7 @@ body  { margin: 0;}
 .cancel, .wifi-cancel { position: absolute; top: 0; right: 0;}
 .i18n-rtl .cancel, .i18n-rtl .wifi-cancel { left: -1; right: auto; -webkit-transform: scaleX(-1); }
 
-.start-buttons {
+.start-buttons, .coin-buttons {
   position: absolute; top:250; left: 0;
   width: 100%;
   justify-content: center;
@@ -77,7 +77,7 @@ body  { margin: 0;}
   font-size: 28px;
 }
 
-.start-buttons .circle-button {
+.start-buttons .circle-button, .coin-buttons .circle-button {
   width: 210px; height: 210px;
   margin: 0 50px;
 }
@@ -99,12 +99,12 @@ body  { margin: 0;}
   line-height: 1;
 }
 
-.start-buttons .circle-button .js-i18n-he-IL {
+.start-buttons .circle-button .js-i18n-he-IL, .coin-buttons .circle-button .js-i18n-he-IL {
   font-size: 35px;
   font-family: 'raanan';
 }
 
-.start-buttons .circle-button .js-i18n-he-IL.solo {
+.start-buttons .circle-button .js-i18n-he-IL.solo, .coin-buttons .circle-button .js-i18n-he-IL.solo {
   font-size: 40px;
 }
 
@@ -390,7 +390,7 @@ body  { margin: 0;}
   font-family: 'Source Code Pro', monospace; font-size: 90%;
 }
 
-.btc-rate {
+.coin-rate {
   font-size: 30px;
   color: #5F5F55;
   line-height: 42px;
@@ -408,7 +408,7 @@ body  { margin: 0;}
   padding-left: 20px;
 }
 
-.btc-amount {
+.coin-amount {
   font-weight: 900;
 }
 
@@ -439,13 +439,13 @@ body  { margin: 0;}
   padding: 30px;
 }
 
-.js-send-bitcoins-disable .spinner {
+.js-send-coins-disable .spinner {
   display: none;
   margin: 0;
   width: 100px;
 }
 
-.js-send-bitcoins-disable .spinner > div {
+.js-send-coins-disable .spinner > div {
   background-color: #0e4160;
 }
 
@@ -764,7 +764,7 @@ body  { margin: 0;}
   position: absolute; bottom: 0px;
 }
 
-.current-btc {
+.current-coin {
   font-size: 34px;
   color: #D0D0C8;
   line-height: 47px;
@@ -772,7 +772,7 @@ body  { margin: 0;}
   top: 10;
   left: 60;
 }
-.i18n-rtl .current-btc { right: 60px; left: auto; }
+.i18n-rtl .current-coin { right: 60px; left: auto; }
 
 .bitcoin-machine {
   font-weight: 200;
@@ -786,7 +786,7 @@ body  { margin: 0;}
 
 .i18n-rtl .bitcoin-machine { left: 60px; right: auto; }
 
-.btc-price {
+.coin-price {
   font-weight: bold;
 }
 

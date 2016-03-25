@@ -67,6 +67,7 @@ function processData (data) {
   if (data.locale) setLocale(data.locale)
   if (!locale) return
   if (data.currency) setCurrency(data.currency)
+  if (data.coin) setCoin(data.coin)
   if (data.exchangeRate) setExchangeRate(data.exchangeRate)
   if (data.fiatExchangeRate) setFiatExchangeRate(data.fiatExchangeRate)
   if (data.buyerAddress) setBuyerAddress(data.buyerAddress)
@@ -120,9 +121,11 @@ function processData (data) {
     case 'fakeIdle':
       setState('idle')
       break
-    case 'dualIdle':
-    case 'fakeDualIdle':
-      setState('dual_idle')
+    case 'postIdle':
+      setState('post_idle')
+      break
+    case 'postDualIdle':
+      setState('post_dual_idle')
       break
     case 'registerPhone':
       phoneKeypad.activate()
@@ -137,8 +140,8 @@ function processData (data) {
       setState('insert_bills')
       break
     case 'acceptingFirstBill':
-      $('.js-send-bitcoins-disable').hide()
-      $('.js-send-bitcoins-enable').show()
+      $('.js-send-coins-disable').hide()
+      $('.js-send-coins-enable').show()
       setState('insert_bills')
       break
     case 'acceptingBills':
@@ -253,6 +256,19 @@ $(document).ready(function () {
     var ssid = $('#js-i18n-wifi-for-ssid').data('ssid')
     var rawSsid = $('#js-i18n-wifi-for-ssid').data('raw-ssid')
     buttonPressed('wifiConnect', {pass: pass, ssid: ssid, rawSsid: rawSsid})
+  })
+
+  var coinButtons = document.getElementById('coin-buttons')
+  touchEvent(coinButtons, function (e) {
+    var coinButtonJ = $(e.target).closest('.circle-button')
+    if (coinButtonJ.length === 0) return
+    var coin = coinButtonJ.attr('data')
+    console.log('touched: ' + coin)
+    $('.coin-units').text(coin)
+    $('.js-coin-upper').text(coin.toUpperCase())
+    $('.js-coin-lower').text(coin.toLowerCase())
+
+    buttonPressed('coin', coin)
   })
 
   var startButtons = document.getElementById('start-buttons')
@@ -587,12 +603,18 @@ function setCurrency (data) {
   $('.js-currency').text(currency)
 }
 
-function setCredit (fiat, bitcoins, lastBill) {
+function setCoin (data) {
+  coin = data
+  console.log("setCoin " + JSON.stringify(data))
+  $('.js-coin').text(coin)
+}
+
+function setCredit (fiat, coins, lastBill) {
   // TODO: this should go in brain.js
   if (currentState === 'insert_bills') setState('insert_more_bills')
 
   $('.total-deposit').html(formatFiat(fiat))
-  updateBitcoins('.total-btc-rec', bitcoins)
+  updateCoins('.total-coin-rec', coins)
 
   var inserted = lastBill
   ? locale.translate('You inserted a %s bill').fetch(formatFiat(lastBill))
@@ -600,8 +622,8 @@ function setCredit (fiat, bitcoins, lastBill) {
 
   $('.js-processing-bill').html(inserted)
 
-  $('.js-send-bitcoins-disable').hide()
-  $('.js-send-bitcoins-enable').show()
+  $('.js-send-coins-disable').hide()
+  $('.js-send-coins-enable').show()
 }
 
 function setupCartridges (_cartridges) {
@@ -613,14 +635,14 @@ function setupCartridges (_cartridges) {
   }
 }
 
-function updateBitcoins (selector, bitcoins) {
-  var units = 'mBTC'
-  var adjustedValue = bitcoins * 1000
-  $(selector).find('.btc-amount').html(formatBitcoins(adjustedValue))
-  $(selector).find('.bitcoin-units').html(units)
+function updateCoins (selector, coins) {
+  //var units = 'mBTC'
+  var adjustedValue = coins
+  $(selector).find('.coin-amount').html(formatCoins(adjustedValue))
+  //$(selector).find('.coin-units').html(units)
 }
 
-function formatBitcoins (amount) {
+function formatCoins (amount) {
   var log = Math.floor(Math.log(amount) / Math.log(10))
   var digits = (log > 0) ? 2 : 2 - log
   return amount.toLocaleString(jsLocaleCode, {
@@ -659,9 +681,9 @@ function singleCurrencyUnit () {
 function setExchangeRate (rate) {
   lastRate = rate
   var rateStr = formatFiat(rate.xbtToFiat, 2)
-  var translated = locale.translate('Our current Bitcoin price is %s').fetch(rateStr)
-  $('.js-i18n-current-bitcoin-price').html(translated)
-  updateBitcoins('.reverse-exchange-rate', rate.fiatToXbt)
+  var translated = locale.translate('Our current price is %s').fetch(rateStr)
+  $('.js-i18n-current-coin-price').html(translated)
+  updateCoins('.reverse-exchange-rate', rate.fiatToXbt)
   var insertedText = locale.translate('per %s inserted')
     .fetch(singleCurrencyUnit())
   $('#fiat-inserted').html(insertedText)
@@ -683,7 +705,7 @@ function setSessionId (sessionId) {
 }
 
 function setBuyerAddress (address) {
-  $('.bitcoin-address').html(address)
+  $('.coin-address').html(address)
 }
 
 function setAccepting (currentAccepting) {
@@ -706,8 +728,8 @@ function highBill (highestBill, reason) {
 
 function readingBill (bill) {
   $('.js-processing-bill').html('Processing ' + formatFiat(bill) + '...')
-  $('.js-send-bitcoins-enable').hide()
-  $('.js-send-bitcoins-disable').show()
+  $('.js-send-coins-enable').hide()
+  $('.js-send-coins-disable').show()
 }
 
 function sendOnly (reason) {
@@ -838,7 +860,7 @@ function setDepositAddress (tx) {
   var bitcoins = satoshisToBitcoins(tx.satoshis)
 
   $('.deposit_state .loading').hide()
-  $('.deposit_state .send-notice .bitcoin-address').text(tx.toAddress)
+  $('.deposit_state .send-notice .coin-address').text(tx.toAddress)
   $('.deposit_state .send-notice').show()
 
   $('#qr-code-deposit').empty()
@@ -865,7 +887,7 @@ function fiatReceipt (tx) {
   var millies = satoshisToMilliBitcoins(tx.satoshis)
   $('.fiat_receipt_state .digital .js-amount').text(millies)
   $('.fiat_receipt_state .fiat .js-amount').text(tx.fiat)
-  $('.fiat_receipt_state .sent-coins .bitcoin-address').text(tx.toAddress)
+  $('.fiat_receipt_state .sent-coins .coin-address').text(tx.toAddress)
 
   $('#qr-code-fiat-receipt').empty()
   $('#qr-code-fiat-receipt').qrcode({
@@ -882,7 +904,7 @@ function fiatComplete (tx) {
   var millies = satoshisToMilliBitcoins(tx.satoshis)
   $('.fiat_complete_state .digital .js-amount').text(millies)
   $('.fiat_complete_state .fiat .js-amount').text(tx.fiat)
-  $('.fiat_complete_state .sent-coins .bitcoin-address').text(tx.toAddress)
+  $('.fiat_complete_state .sent-coins .coin-address').text(tx.toAddress)
 
   $('#qr-code-fiat-complete').empty()
   $('#qr-code-fiat-complete').qrcode({

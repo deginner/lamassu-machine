@@ -383,29 +383,41 @@
       <section class="viewport idle_state" data-tr-section="idle">
         <section class="main">
           <h1 id="hey" class="js-i18n">Hello.</h1>
-          <section id="start-buttons" class="start-buttons">
-            <div class="circle-button"><span class="js-i18n">START</span></div>
+          <section id="coin-buttons" class="coin-buttons">
+            <div class="circle-button" data="BTC"><span class="js-i18n">BITCOIN</span></div>
+            <div class="circle-button" data="DASH"><span class="js-i18n">DASH</span></div>
           </section>
-          <p id="tap" class="js-i18n">Tap to buy bitcoins in 3 steps</p>
+          <p id="tap" class="js-i18n">Tap to select a coin.</p>
         </section>
         <section class="bottom-bar">
-          <p class="js-i18n js-i18n-current-bitcoin-price current-btc">Loading Bitcoin price...</p>
           <span id="digital-change-language-button" class="button">Change language</span>
         </section>
       </section>
 
-      <section class="viewport dual_idle_state" data-tr-section="dual-idle">
+      <section class="viewport post_idle_state" data-tr-section="post-idle">
+        <section class="main">
+          <h1 id="hey" class="js-i18n">Hello.</h1>
+          <section id="start-buttons" class="start-buttons">
+            <div class="circle-button"><span class="js-i18n">BUY</span></div>
+          </section>
+          <p id="tap" class="js-i18n">Tap to buy <span class="js-coin-lower"></span> in 3 steps</p>
+        </section>
+        <section class="bottom-bar">
+          <p class="js-i18n js-i18n-current-coin-price current-coin">Loading price...</p>
+        </section>
+      </section>
+
+      <section class="viewport post_dual_idle_state" data-tr-section="post-dual-idle">
         <section class="main">
           <section class="sides">
             <section class="digital-section start">
-              <div id="want_bitcoin" class="circle-button"><span class="js-i18n">I want<br/>Bitcoin</span></div>
+              <div id="want_bitcoin" class="circle-button"><span class="js-i18n">I want<br/><span class="js-coin-upper"></span></span></div>
             </section>
             <section class="fiat-section start">
               <div id="want_cash" class="circle-button"><span class="js-i18n">I want<br/>Cash</span></div>
               <span id="redeem-button" class="button subtle"><span class="js-i18n">Redeem</span></span>
             </section>
           </section>
-          <span id="change-language-button" class="button brandon">Change language</span>
         </section>
       </section>
 
@@ -430,7 +442,7 @@
           <img src="images/scan-id.png" width="453" height="606" />
         </div>
         <section class="bottom-bar">
-          <p class="js-i18n js-i18n-current-bitcoin-price current-btc">Loading Bitcoin price...</p>
+          <p class="js-i18n js-i18n-current-coin-price current-coin">Loading price...</p>
         </section>
         <section id="scan-id-cancel" class="cancel"><img src="images/cancel.png" /></section>
       </section>
@@ -747,7 +759,7 @@
       <section class="viewport scan_address_state digital-side" data-tr-section="scan-address">
         <section class="main">
           <section id="scan-instructions" class="primary-side">
-            <h1 id="scan-address" class="js-i18n">Scan your Bitcoin address</h1>
+            <h1 id="scan-address" class="js-i18n">Scan your <span class="js-coin-upper"></span> address</h1>
             <p id="hold-qr-code">
               <span class="js-i18n">Hold your QR code up to the scan window to proceed.</span>
             </p>
@@ -758,7 +770,7 @@
           </div>
         </section>
         <section class="bottom-bar">
-          <p class="js-i18n js-i18n-current-bitcoin-price current-btc">Loading Bitcoin price...</p>
+          <p class="js-i18n js-i18n-current-coin-price current-coin">Loading price...</p>
         </section>
         <section id="scanCancel" class="cancel"><img src="images/cancel.png" /></section>
       </section>
@@ -767,12 +779,12 @@
         <section class="main">
           <section class="primary-side">
             <h1 id="insert-bill" class="js-i18n">Insert a bill</h1>
-            <p class="send-to-your-address"><span class="js-i18n">Your bitcoins will be sent to:</span><br/>
-            <span class="bitcoin-address"></span></p>
-            <p class="btc-rate">
+            <p class="send-to-your-address"><span class="js-i18n">Your <span class="js-coin-lower"></span> will be sent to:</span><br/>
+            <span class="coin-address"></span></p>
+            <p class="coin-rate">
               <span class="btc reverse-exchange-rate i18n-latin">
-                <span class="btc-amount i18n-latin"></span>
-                <span class="bitcoin-units i18n-latin">BTC</span>
+                <span class="coin-amount i18n-latin"></span>
+                <span class="coin-units i18n-latin">BTC</span>
               </span>
               <span id="fiat-inserted"></span>
             </p>
@@ -786,8 +798,8 @@
           </section>
         </section>
         <section class="bottom-bar">
-          <p class="js-i18n js-i18n-current-bitcoin-price current-btc js-send-bitcoins-enable">Loading Bitcoin price...</p>
-          <p class="current-btc js-processing-bill js-send-bitcoins-disable"></p>
+          <p class="js-i18n js-i18n-current-coin-price current-coin js-send-coins-enable">Loading price...</p>
+          <p class="current-coin js-processing-bill js-send-coins-disable"></p>
         </section>
         <section id="insertBillCancel" class="cancel"><img src="images/cancel.png" /></section>
       </section>
@@ -796,11 +808,11 @@
         <section class="main">
           <section id="send-side">
             <p id="tap-complete" class="js-i18n">Tap to complete purchase</p>
-            <div id="send-coins" class="send-coins circle-button js-send-bitcoins-enable">
-              <span class="js-i18n js-send-bitcoins-enable">SEND BITCOINS</span>
+            <div id="send-coins" class="send-coins circle-button js-send-coins-enable">
+              <span class="js-i18n js-send-coins-enable">Send <span class="js-coin-upper"></span></span>
             </div>
-            <div class="send-coins circle-button js-send-bitcoins-disable">
-              <div class="js-send-bitcoins-disable spinner">
+            <div class="send-coins circle-button js-send-coins-disable">
+              <div class="js-send-coins-disable spinner">
                 <div class="bounce1"></div>
                 <div class="bounce2"></div>
                 <div class="bounce3"></div>
@@ -826,11 +838,11 @@
                 <span class="js-i18n">deposited so far</span>
               </p>
               <p>
-                <span class="total-btc-rec total">
-                  <span class="btc-amount total-btc amount i18n-latin"></span>
-                  <span class="bitcoin-units i18n-latin">BTC</span>
+                <span class="total-coin-rec total">
+                  <span class="coin-amount total-coin amount i18n-latin"></span>
+                  <span class="coin-units i18n-latin">BTC</span>
                 </span><br/>
-                <span class="js-i18n">total bitcoins purchased</span>
+                <span class="js-i18n">total <span class="js-coin-lower"></span> purchased</span>
               </p>
             </div>
           </section>
@@ -846,16 +858,16 @@
             <h1 class="thanks" class="js-i18n">Thank you!</h1>
             <div class="deposit-record">
               <p>
-                <span class="total-btc-rec total i18n-latin">
-                <span class="btc-amount total-btc amount i18n-latin"></span>
-                <span class="bitcoin-units i18n-latin">BTC</span>
+                <span class="total-coin-rec total i18n-latin">
+                <span class="coin-amount total-coin amount i18n-latin"></span>
+                <span class="coin-units i18n-latin">BTC</span>
                 </span>
                 <br/>
-                <span class="js-i18n">total bitcoins purchased</span>
+                <span class="js-i18n">total <span class="js-coin-lower"></span> purchased</span>
               </p>
             </div>
-            <p><span class="js-i18n">Your bitcoins are on their way to:</span><br/>
-            <span class="bitcoin-address">1Kjrv5PrQQaArvQc2B3D72J7zEGDJFBi5A</span></p>
+            <p><span class="js-i18n">Your <span class="js-coin-lower"></span> are on their way to:</span><br/>
+            <span class="coin-address">1Kjrv5PrQQaArvQc2B3D72J7zEGDJFBi5A</span></p>
           </section>
           <section class="qr-section">
             <img class="qr-frame" src="images/qr_code.png" />
@@ -864,7 +876,7 @@
           </section>
         </section>
         <section class="bottom-bar">
-          <p class="current-btc js-i18n">Tap anywhere when you're done.</p>
+          <p class="current-coin js-i18n">Tap anywhere when you're done.</p>
         </section>
       </section>
 
@@ -875,16 +887,16 @@
             <p class="relax js-i18n">Our Internet was down for a bit. You'll get all your coins but you might receive them in two separate batches.</p>
             <div class="deposit-record">
               <p>
-                <span class="total-btc-rec total i18n-latin">
-                <span class="btc-amount total-btc amount i18n-latin"></span>
-                <span class="bitcoin-units i18n-latin">BTC</span>
+                <span class="total-coin-rec total i18n-latin">
+                <span class="coin-amount total-coin amount i18n-latin"></span>
+                <span class="coin-units i18n-latin">BTC</span>
                 </span>
                 <br/>
-                <span class="js-i18n">total bitcoins purchased</span>
+                <span class="js-i18n">total <span class="js-coin-lower"></span> purchased</span>
               </p>
             </div>
-            <p><span class="js-i18n">Your bitcoins are on their way to:</span><br/>
-            <span class="bitcoin-address">1Kjrv5PrQQaArvQc2B3D72J7zEGDJFBi5A</span></p>
+            <p><span class="js-i18n">Your <span class="js-coin-lower"></span> are on their way to:</span><br/>
+            <span class="coin-address">1Kjrv5PrQQaArvQc2B3D72J7zEGDJFBi5A</span></p>
           </section>
           <section class="qr-section">
             <img class="qr-frame" src="images/qr_code.png" />
@@ -893,7 +905,7 @@
           </section>
         </section>
         <section class="bottom-bar">
-          <p class="current-btc js-i18n">Tap anywhere when you're done.</p>
+          <p class="current-coin js-i18n">Tap anywhere when you're done.</p>
         </section>
       </section>
 
@@ -1000,7 +1012,7 @@
         <section class="main">
           <section class="top">
             <section class="content">
-                <h1 class="js-i18n">We're all out of bitcoins!</h1>
+                <h1 class="js-i18n">We're all out of <span class="js-coin-lower"></span>!</h1>
                 <p><strong class="js-i18n">Please ask for assistance.</strong></p>
                 <div class="actions">
                 <span id="limit-reached-ok" display="inline-block" class="button ok js-i18n">OK</span>
@@ -1046,11 +1058,11 @@
         <section class="main">
           <section class="top">
             <section class="content">
-              <h1 class="js-i18n">Sending bitcoins…</h1>
+              <h1 class="js-i18n">Sending <span class="js-coin-lower"></span>…</h1>
                 <div class="loader"><img src="images/loading.gif" /></div>
                <p>
-                <strong class="js-i18n">Your bitcoins are on their way to:</strong><br/>
-                <span class="bitcoin-address"></span>
+                <strong class="js-i18n">Your <span class="js-coin-lower"></span> are on their way to:</strong><br/>
+                <span class="coin-address"></span>
                </span>
                </p>
             </section>
@@ -1166,7 +1178,7 @@
       <section class="viewport choose_fiat_state fiat-side" data-tr-section="choose-fiat">
         <section class="instructions">
           <h1 class="js-i18n">How much?</h1>
-          <h2><span class="js-i18n">1 BTC is</span> <strong class="js-fiat-rate"></strong> <span class="js-currency"/></h2>
+          <h2><span class="js-i18n">1 <span class="js-coin-code"/> is</span> <strong class="js-fiat-rate"></strong> <span class="js-currency"/></h2>
           <section class="sums">
             <div class="fiat"><strong class="fiat-amount"></strong> <span class="js-currency"/></div>
             <div class="digital js-18n" id="js-i18n-choose-digital-amount"></div>
@@ -1191,11 +1203,11 @@
 
       <section class="viewport deposit_state fiat-side" data-tr-section="deposit">
         <section class="instructions">
-          <h1 class="js-i18n">Send Bitcoins</h1>
-          <h2 class="js-i18n">Please scan the QR code to send us your bitcoins.</h2>
+          <h1 class="js-i18n">Send <span class="js-coin-upper"></span></h1>
+          <h2 class="js-i18n">Please scan the QR code to send us your <span class="js-coin-lower"></span>.</h2>
           <section class="sums">
             <div class="digital">
-              <div class="amount"><strong class="js-amount"></strong> mBTC</div>
+              <div class="amount"><strong class="js-amount"></strong> <span class="js-coin-code-mili"/></div>
               <div class="js-i18n">will be sent</div>
             </div>
             <div class="fiat">
@@ -1209,8 +1221,8 @@
           <div id="qr-code-deposit"></div>
           <div class="loading js-i18n">Generating address...</div>
           <div class="send-notice">
-            <span class="js-i18n">Your bitcoins will be sent to:</span><br/>
-            <span class="bitcoin-address"></span>
+            <span class="js-i18n">Your <span class="js-coin-lower"></span> will be sent to:</span><br/>
+            <span class="coin-address"></span>
           </div>
         </section>
         <section id="depositCancel" class="cancel"><img src="images/cancel.png" /></section>
@@ -1218,7 +1230,7 @@
 
       <section class="viewport pending_deposit_state fiat-side" data-tr-section="pending-deposit">
         <section class="info">
-          <h1 class="js-i18n">Bitcoins received!</h1>
+          <h1 class="js-i18n"><span class="js-coin-upper"></span> received!</h1>
           <section class="description">
             <p class="js-i18n">We've received your payment.</p>
             <p><strong class="js-i18n">Authorizing...</strong></p>
@@ -1252,8 +1264,8 @@
         <section class="info">
           <h1 class="js-i18n">Nothing yet...</h1>
           <section class="description">
-            <p class="js-i18n">No bitcoins are showing up.</p>
-            <p><strong class="js-i18n">Have you sent the bitcoins yet?</strong></p>
+            <p class="js-i18n">No <span class="js-coin-lower"></span> are showing up.</p>
+            <p><strong class="js-i18n">Have you sent the <span class="js-coin-lower"></span> yet?</strong></p>
           </section>
           <section class="actions">
             <span class="button js-i18n" id="deposit-timeout-sent-yes">Yes, I have</span>
@@ -1275,7 +1287,7 @@
           <h1 class="js-i18n">Your Receipt</h1>
           <section class="sums">
             <div class="digital">
-              <div class="amount"><strong class="js-amount"></strong> mBTC</div>
+              <div class="amount"><strong class="js-amount"></strong> <span class="js-coin-code-mili"/></div>
               <div class="js-i18n">were sent by you</div>
             </div>
             <div class="fiat">
@@ -1284,8 +1296,8 @@
             </div>
           </section>
           <div class="sent-coins">
-            <span class="js-i18n">Your bitcoins were sent to:</span><br/>
-            <span class="bitcoin-address"></span>
+            <span class="js-i18n">Your <span class="js-coin-lower"></span> were sent to:</span><br/>
+            <span class="coin-address"></span>
           </div>
         </section>
 
@@ -1304,7 +1316,7 @@
           <h1 class="js-i18n">Thank you!</h1>
           <section class="sums">
             <div class="digital">
-              <div class="amount"><strong class="js-amount"></strong> mBTC</div>
+              <div class="amount"><strong class="js-amount"></strong> <span class="js-coin-code-mili"/></div>
               <div class="js-i18n">were sent by you</div>
             </div>
             <div class="fiat">
@@ -1313,8 +1325,8 @@
             </div>
           </section>
           <div class="sent-coins">
-            <span class="js-i18n">Your bitcoins were sent to:</span><br/>
-            <span class="bitcoin-address"></span>
+            <span class="js-i18n">Your <span class="js-coin-lower"></span> were sent to:</span><br/>
+            <span class="coin-address"></span>
           </div>
         </section>
 
