@@ -67,7 +67,7 @@ function processData (data) {
   if (data.locale) setLocale(data.locale)
   if (!locale) return
   if (data.currency) setCurrency(data.currency)
-  if (data.coin) setCoin(data.coin)
+  //if (data.coin) setCoin(data.coin)
   if (data.exchangeRate) setExchangeRate(data.exchangeRate)
   if (data.fiatExchangeRate) setFiatExchangeRate(data.fiatExchangeRate)
   if (data.buyerAddress) setBuyerAddress(data.buyerAddress)
@@ -120,6 +120,7 @@ function processData (data) {
     case 'idle':
     case 'fakeIdle':
       setState('idle')
+      setExchangeRate(lastRate)
       break
     case 'postIdle':
       setState('post_idle')
@@ -263,11 +264,9 @@ $(document).ready(function () {
     var coinButtonJ = $(e.target).closest('.circle-button')
     if (coinButtonJ.length === 0) return
     var coin = coinButtonJ.attr('data')
-    console.log('touched: ' + coin)
     $('.coin-units').text(coin)
     $('.js-coin-upper').text(coin.toUpperCase())
     $('.js-coin-lower').text(coin.toLowerCase())
-
     buttonPressed('coin', coin)
   })
 
@@ -336,7 +335,7 @@ $(document).ready(function () {
   setupButton('unconfirmed-deposit-ok', 'idle')
   setupButton('wrong-dispenser-currency-ok', 'idle')
 
-  setupButton('change-language-button', 'changeLanguage')
+  //setupButton('change-language-button', 'changeLanguage')
   setupButton('digital-change-language-button', 'changeLanguage')
 
   var lastTouch = null
@@ -603,12 +602,6 @@ function setCurrency (data) {
   $('.js-currency').text(currency)
 }
 
-function setCoin (data) {
-  coin = data
-  console.log("setCoin " + JSON.stringify(data))
-  $('.js-coin').text(coin)
-}
-
 function setCredit (fiat, coins, lastBill) {
   // TODO: this should go in brain.js
   if (currentState === 'insert_bills') setState('insert_more_bills')
@@ -680,7 +673,14 @@ function singleCurrencyUnit () {
 
 function setExchangeRate (rate) {
   lastRate = rate
-  var rateStr = formatFiat(rate.xbtToFiat, 2)
+  var rateStr = formatFiat(rate.xbtToFiat, 2);
+  if (currentState == 'idle') {
+    rateStr = 'loading';
+    $('.start-buttons').addClass('start-buttons-disabled').removeClass('start-buttons');
+  } else if (currentState == 'post_idle') {
+    $('.start-buttons-disabled').addClass('start-buttons').removeClass('start-buttons-disabled');
+  }
+
   var translated = locale.translate('Our current price is %s').fetch(rateStr)
   $('.js-i18n-current-coin-price').html(translated)
   updateCoins('.reverse-exchange-rate', rate.fiatToXbt)

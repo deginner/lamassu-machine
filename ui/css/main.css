@@ -73,6 +73,10 @@ body  { margin: 0;}
   display: flex;
 }
 
+.start-buttons-disabled {
+  display: none;
+}
+
 .start-multi .circle-button {
   font-size: 28px;
 }
