@@ -4,6 +4,7 @@
   "dependencies": {
     "async": "~0.2.9",
     "bitcoin-address": "~0.1.0",
+    "darkcoin-address": "~0.3.1",
     "bluebird": "~2.4.2",
     "boom": "~2.6.1",
     "bunyan": "~0.22.1",
