@@ -10,13 +10,13 @@ var lastRates = null
 var coins = {
   BTC: {
     unitScale: 8,
-    displayScale: 5,
-    displayCode: 'mBTC'
+    displayScale: 8,
+    displayCode: 'BTC'
   },
-  ETH: {
-    unitScale: 18,
-    displayScale: 15,
-    displayCode: 'mETH'
+  DASH: {
+    unitScale: 8,
+    displayScale: 8,
+    displayCode: 'DASH'
   }
 }
 
@@ -831,8 +831,8 @@ function translateCoin (cryptoCode) {
   tc('scan-address', 'Scan your %s address', cryptoCode)
   tc('coins-to-address', 'Your %s will be sent to:', cryptoCode)
 
-  if (cryptoCode === 'ETH') {
-    tc('authorizing-note', 'This should take <strong>15 seconds</strong> on average.<br/>Occasionally, it will take over a minute.')
+  if (cryptoCode === 'DASH') {
+    tc('authorizing-note', 'This should take <strong>30 seconds</strong> on average.<br/>Occasionally, it will take up to 2 minutes.')
   }
 }
 
