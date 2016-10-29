@@ -19,12 +19,7 @@
         "primaryLocales": ["en-US"]
       }
     },
-    "transactionLogPath": "log/transaction.log",
-    "certs": {
-      "certFile": "client.pem",
-      "keyFile": "client.key"
-    },
-    "connectionInfoPath": "connection_info.json"
+    "transactionLogPath": "log/transaction.log"
   },
   "wifi": {
     "connectionTimeout": 20000,

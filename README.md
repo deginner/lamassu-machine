@@ -1,11 +1,11 @@
-# lamassu-machine
-The software that runs the Lamassu Bitcoin Machine.
+# ctm-machine
+The software that runs the CTM Machine.
 
 ## Installing
 
 ```
-git clone https://github.com/lamassu/lamassu-machine.git
-cd lamassu-machine
+git clone https://github.com/CTMGuild/ctm-machine.git
+cd ctm-machine
 npm install
 ./setup.sh
 ```
@@ -15,8 +15,8 @@ npm install
 ### Mac OS X local install for testing and development
 
 ```
-git clone https://github.com/lamassu/lamassu-machine.git
-cd lamassu-machine
+git clone https://github.com/CTMGuild/ctm-machine.git
+cd ctm-machine
 
 brew install nvm
 # then following brew's install notes on nvm
@@ -35,7 +35,7 @@ cp licenses.sample.json licenses.json
 # in a separate window start a fake bill validator, and use the outputted ttys number on the next command, like /dev/ttys008
 ruby fake_id003.rb
 
-node bin/lamassu-machine --mockBTC 1KAkLnhU1BpvgjQUgLk1HF4PEgh4asFNS8 --mockBv /dev/ttys008 --mockTrader --mockCam --mockBillDispenser
+node bin/ctm-machine --mockBTC 1KAkLnhU1BpvgjQUgLk1HF4PEgh4asFNS8 --mockBv /dev/ttys008 --mockBroker --mockCam --mockBillDispenser
 
 open ui/start.html
 ```
@@ -51,11 +51,11 @@ $ ruby fake_id003.rb
 ```
 
 The mock validator will output its device path, e.g. ```/dev/ttys009```.
-Use that to run the main program, called lamassu-machine, along with a Bitcoin
+Use that to run the main program, called ctm-machine, along with a Bitcoin
 address **you control**:
 
 ```
-node bin/lamassu-machine --mockBTC 1KAkLnhU1BpvgjQUgLk1HF4PEgh4asFNS8 \
+node bin/ctm-machine --mockBTC 1KAkLnhU1BpvgjQUgLk1HF4PEgh4asFNS8 \
 --mockBv /dev/ttys009 --mockTrader --mockCam
 ```
 
@@ -87,7 +87,7 @@ This should output something like this:
 Now, open a Chrome or Chromium browser to
 
 ```
-file:///<lamassu-machine path>/ui/start.html
+file:///<ctm-machine path>/ui/start.html
 ```
 
 and you should get this:
@@ -100,12 +100,7 @@ to insert a one dollar bill.
 
 ## Mocking
 
-In order to easily test **lamassu-server**, you can use the ```mock``` command.
-First, run lamassu-server in its own terminal:
-
-```
-LAMASSU_ENV=debug bin/lamassu-server --http
-```
+In order to easily test **desw**, you can use the ```mock``` command.
 
 Now, in a separate terminal, run ```mock```:
 
@@ -113,12 +108,12 @@ Now, in a separate terminal, run ```mock```:
 node bin/mock.js -a 1KAkLnhU1BpvgjQUgLk1HF4PEgh4asFNS8
 ```
 
-This will send $1 worth of bitcoins to 1KAkLnhU1BpvgjQUgLk1HF4PEgh4asFNS8, via lamassu-server.
+This will send $1 worth of bitcoins to 1KAkLnhU1BpvgjQUgLk1HF4PEgh4asFNS8, via desw.
 
 Here's how to run it with a mock bill validator, a mock camera, currency forced to USD,
 a mock bill dispenser, and using an HTTP connection to a local server. First, set
 ```brain.mockBTC``` to a bitcoin address in device_config.json. Then:
 
 ```
-node bin/lamassu-machine --mockBv /dev/ttys009 --mockCam --fiat USD --mockBillDispenser --http
+node bin/ctm-machine --mockBv /dev/ttys009 --mockCam --fiat USD --mockBillDispenser --http
 ```

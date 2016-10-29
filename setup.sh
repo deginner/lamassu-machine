@@ -29,9 +29,6 @@ cp -rf /tmp/lamassu-fonts/source-sans-pro-*/TTF ui/css/fonts
 cp -rf /tmp/lamassu-fonts/source-code-pro-*/TTF ui/css/fonts
 echo "Setting up config files..."
 cp device_config.sample.json device_config.json
-echo "Setting up keys..."
-cp data/client.sample.key data/client.key
-cp data/client.sample.pem data/client.pem
 
 if [ ! -e "licenses.json" ]; then
     echo

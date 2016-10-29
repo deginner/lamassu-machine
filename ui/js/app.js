@@ -110,15 +110,6 @@ function processData (data) {
         locale.translate('Connected. Waiting for ticker.').fetch())
       setState('wifi_connecting')  // in case we didn't go through wifi-connecting
       break
-    case 'pairing':
-      confirmBeep.play()
-      setState('pairing')
-      break
-    case 'pairingError':
-      $('.js-pairing-error').text(data.err)
-      // Give it some time to update text in background
-      setTimeout(function () { setState('pairing_error') }, 500)
-      break
     case 'booting':
       if (currentState !== 'maintenance') setState('booting')
       break
@@ -300,9 +291,6 @@ $(document).ready(function () {
 
   setupButton('initialize', 'initialize')
   setupButton('test-mode', 'testMode')
-  setupButton('pairing-scan', 'pairingScan')
-  setupButton('pairing-scan-cancel', 'pairingScanCancel')
-  setupButton('pairing-error-ok', 'pairingScanCancel')
   setupButton('cash-in', 'start')
   setupButton('one-way-cash-in', 'start')
   setupButton('want_cash', 'startFiat')
