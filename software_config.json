@@ -17,7 +17,8 @@
       "localeInfo": {
         "primaryLocale": "en-US",
         "primaryLocales": ["en-US"]
-      }
+      },
+      "currency": "USD"
     },
     "transactionLogPath": "log/transaction.log"
   },
