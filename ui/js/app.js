@@ -10,13 +10,13 @@ var lastRates = null
 var coins = {
   BTC: {
     unitScale: 8,
-    displayScale: 5,
-    displayCode: 'mBTC'
+    displayScale: 8,
+    displayCode: 'BTC'
   },
-  ETH: {
-    unitScale: 18,
-    displayScale: 15,
-    displayCode: 'mETH'
+  DASH: {
+    unitScale: 8,
+    displayScale: 8,
+    displayCode: 'DASH'
   }
 }
 
@@ -64,16 +64,6 @@ function buttonPressed (button, data) {
   websocket.send(JSON.stringify(res))
 }
 
-function swaperoo (s1, s2, indicator) {
-  if (indicator === true) {
-    $(s1).show()
-    $(s2).hide()
-  } else if (indicator === false) {
-    $(s2).show()
-    $(s1).hide()
-  }
-}
-
 function processData (data) {
   if (data.localeInfo) setLocaleInfo(data.localeInfo)
   if (data.locale) setLocale(data.locale)
@@ -85,7 +75,7 @@ function processData (data) {
     var lastBill = data.action === 'rejectedBill' ? null : data.credit.lastBill
     setCredit(data.credit.fiat, data.credit.cryptoAtoms, lastBill, data.credit.cryptoCode)
   }
-  if (data.sessionId) setSessionId(data.sessionId)
+  if (data.txId) setTxId(data.txId)
   if (data.wifiList) setWifiList(data.wifiList)
   if (data.wifiSsid) setWifiSsid(data.wifiSsid)
   if (data.sendOnly) sendOnly(data.sendOnly, data.cryptoCode)
@@ -98,7 +88,10 @@ function processData (data) {
   if (data.cryptoCode) translateCoin(data.cryptoCode)
   if (data.coins) handleCoins(data.coins, data.twoWayMode)
 
-  swaperoo('.js-redeem', '.js-deposit', data.redeem)
+  if (data.context) {
+    $('.js-context').hide()
+    $('.js-context-' + data.context).show()
+  }
 
   switch (data.action) {
     case 'wifiList':
@@ -116,15 +109,6 @@ function processData (data) {
       t('wifi-connecting',
         locale.translate('Connected. Waiting for ticker.').fetch())
       setState('wifi_connecting')  // in case we didn't go through wifi-connecting
-      break
-    case 'pairing':
-      confirmBeep.play()
-      setState('pairing')
-      break
-    case 'pairingError':
-      $('.js-pairing-error').text(data.err)
-      // Give it some time to update text in background
-      setTimeout(function () { setState('pairing_error') }, 500)
       break
     case 'booting':
       if (currentState !== 'maintenance') setState('booting')
@@ -307,9 +291,6 @@ $(document).ready(function () {
 
   setupButton('initialize', 'initialize')
   setupButton('test-mode', 'testMode')
-  setupButton('pairing-scan', 'pairingScan')
-  setupButton('pairing-scan-cancel', 'pairingScanCancel')
-  setupButton('pairing-error-ok', 'pairingScanCancel')
   setupButton('cash-in', 'start')
   setupButton('one-way-cash-in', 'start')
   setupButton('want_cash', 'startFiat')
@@ -760,13 +741,13 @@ function setExchangeRate (_rates) {
   $('.js-crypto-display-units').text(displayCode)
 }
 
-function setSessionId (sessionId) {
+function setTxId (txId) {
   $('.qr-code').empty()
   $('.qr-code').qrcode({
     render: 'canvas',
     width: 225,
     height: 225,
-    text: sessionId
+    text: txId
   })
 }
 
@@ -838,8 +819,8 @@ function translateCoin (cryptoCode) {
   tc('scan-address', 'Scan your %s address', cryptoCode)
   tc('coins-to-address', 'Your %s will be sent to:', cryptoCode)
 
-  if (cryptoCode === 'ETH') {
-    tc('authorizing-note', 'This should take <strong>15 seconds</strong> on average.<br/>Occasionally, it will take over a minute.')
+  if (cryptoCode === 'DASH') {
+    tc('authorizing-note', 'This should take <strong>30 seconds</strong> on average.<br/>Occasionally, it will take up to 2 minutes.')
   }
 }
 

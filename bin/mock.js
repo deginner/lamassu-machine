@@ -29,10 +29,10 @@ var trader = require('../lib/trader')(traderConfig)
 trader.init(connectionInfo)
 trader.run()
 
-console.log('Connecting to lamassu-server...')
+console.log('Connecting to desw...')
 var connectTimeout = setTimeout(function () {
   if (_connected) return
-  console.log('Could not connect to lamassu-server on localhost:3000. Exiting.')
+  console.log('Could not connect to desw on localhost:3000. Exiting.')
   process.exit(1)
 }, 10000)
 
@@ -54,8 +54,6 @@ function pollUpdate () {
   ready()
 }
 
-var _sessionId = uuid.v4()
-console.log('New sessionId: %s', _sessionId)
 var _satoshis = 0
 var _fiat = 0
 var _tradeRec
@@ -99,7 +97,6 @@ function sendCoins (callback) {
 }
 
 function ready () {
-  trader.sessionId = _sessionId
   insertBill(1)
   insertBillMachine(1)
 

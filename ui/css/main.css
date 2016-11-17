@@ -1715,13 +1715,13 @@ body  { margin: 0;}
   background: url('../images/choose-btc-selected.png') no-repeat;
 }
 
-.coin-eth {
+.coin-dash {
   top: 189px;
   left: 709px;
 }
 
-.coin-eth:active {
-  background: url('../images/choose-eth-selected.png') no-repeat;
+.coin-dash:active {
+  background: url('../images/choose-dash-selected.png') no-repeat;
 }
 
 .authorizing-note {

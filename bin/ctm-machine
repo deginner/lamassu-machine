@@ -14,11 +14,11 @@ var bailed = false;
 function bail(err) {
   if (bailed) return;
   bailed = true;
-  console.log('lamassu-machine bailing out momentarily...');
+  console.log('ctm-machine bailing out momentarily...');
   console.log(err);
   if (err.stack) console.log(err.stack);
   setTimeout(function () {
-    console.log('lamassu-machine bailing out');
+    console.log('ctm-machine bailing out');
     process.exit(10);
     process.abort();  // Make sure we're dead
   }, 7000);   // Leave some time to connect for browser to set error screen
@@ -28,13 +28,12 @@ function startBrain() {
   var commandLine = minimist(process.argv.slice(2));
   
   var config = Configuration.loadConfig(commandLine);
-
   var brain = new Brain(config);
   brain.on('error', bail);
   brain.run();
 }
 
 process.on('uncaughtException', bail);
-process.on('exit', function() { console.log('lamassu-machine exiting'); });
+process.on('exit', function() { console.log('ctm-machine exiting'); });
 
 startBrain();

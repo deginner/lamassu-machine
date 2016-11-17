@@ -17,14 +17,10 @@
       "localeInfo": {
         "primaryLocale": "en-US",
         "primaryLocales": ["en-US"]
-      }
+      },
+      "currency": "USD"
     },
-    "transactionLogPath": "log/transaction.log",
-    "certs": {
-      "certFile": "client.pem",
-      "keyFile": "client.key"
-    },
-    "connectionInfoPath": "connection_info.json"
+    "transactionLogPath": "log/transaction.log"
   },
   "wifi": {
     "connectionTimeout": 20000,
@@ -50,14 +46,19 @@
     }
   },
   "trader": {
-    "protocol": "https",
-    "host": "localhost",
-    "port": 3000,
-    "rejectUnauthorized": false,
+    "protocol": "http",
+    "baseURL": "http://45.32.22.99:8002",
+    "port": 8002,
+    "serverKey": "1F26pNMrywyZJdr22jErtKcjF8R3Ttt55G",
+    "wif": "",
+    "txLimit": 1000,
+    "idVerificationLimit": 1000,
+    "fiatTxLimit": 1000,
+    "zeroConfLimit": 1000,
     "settings": {
-      "pollInterval": 5000,
-      "tradeInterval": 10000,
-      "retryInterval": 5000,
+      "pollInterval": 10000,
+      "tradeInterval": 100000,
+      "retryInterval": 50000,
       "sendTimeout": 90000,
       "pollTimeout": 60000
     }
