@@ -37,3 +37,15 @@ if [ ! -e "licenses.json" ]; then
 fi
 
 echo "Successful installation."
+
+## Upgrade ubuntu
+#do-release-upgrade
+
+## Install nodejs & deps
+#curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+#sudo apt-get -y install nodejs build-essential pkg-config libcairo2-dev libjpeg-devlibgif-dev
+
+## Ugly hack for when having trouble compiling v4l2camera module
+#echo "59a60\n> #include <time.h>" | sudo patch /usr/include/linux/videodev2.h
+
+
